@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 import ListComponent from "../components/ListComponent";
-import { Bounce, ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 // index.js or App.js or similar entry file
 import "react-toastify/dist/ReactToastify.css";
 import { db } from "../firebase";
 import {
-  query,
   collection,
-  onSnapshot,
   addDoc,
   serverTimestamp,
 } from "firebase/firestore";

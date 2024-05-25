@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import FilterComponent from "./FilterComponent";
 import TODOList from "./TODOList";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../firebase";
-import { UserAuth } from "../context/AuthContext";
-import { Bounce, ToastContainer, toast } from "react-toastify";
+import {  ToastContainer} from "react-toastify";
 import noData from "../assets/images/NoData.jpg";
 // index.js or App.js or similar entry file
 import "./style.css";
