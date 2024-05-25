@@ -46,7 +46,7 @@ const FilterComponent = ({ onFilterChange }) => {
         <MenuItem onClick={() => handleClose("All")}>All</MenuItem>
         <MenuItem onClick={() => handleClose("Completed")}>Completed</MenuItem>
         <MenuItem onClick={() => handleClose("Favorite")}>Favorite</MenuItem>
-        <MenuItem onClick={() => handleClose("Deleted")}>Deleted</MenuItem>
+        {/* <MenuItem onClick={() => handleClose("Deleted")}>Deleted</MenuItem> */}
       </Menu>
     </div>
   );

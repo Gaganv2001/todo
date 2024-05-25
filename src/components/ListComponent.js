@@ -6,6 +6,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import { UserAuth } from "../context/AuthContext";
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import noData from "../assets/images/NoData.jpg";
 // index.js or App.js or similar entry file
 import "./style.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -87,23 +88,22 @@ const ListComponent = () => {
         theme="light"
       />
 
-      <p className="text-black font-bold text-2xl text-center md:text-left">TODO LIST</p>
+      <p className="text-black font-bold text-2xl text-center md:text-left">
+        TODO LIST
+      </p>
 
       <div className="flex flex-col md:flex-row justify-between mt-11 md:gap-11">
         <SearchBar onChange={handleSearch} />
         <FilterComponent onFilterChange={handleFilterChange} />
       </div>
- 
-      <div className="items-center justify-center mt-4 h-96">
-        {/* Add height and margin */}
+
+      <div className="items-center justify-center mt-4 h-96 ">
         {listloading ? (
           <div className="flex items-center justify-center h-full">
             <p>Loading ...</p>
           </div>
-        ) : (
-          <div className="todo-list-container h-full overflow-y-auto">
-            {" "}
-            {/* Set height and make it scrollable */}
+        ) : filteredTodos.length > 0 ? (
+          <div className="todo-list-container h-full overflow-y-auto w-full">
             {filteredTodos.map((todo) => (
               <TODOList
                 key={todo.id}
@@ -113,6 +113,11 @@ const ListComponent = () => {
                 status={todo.status}
               />
             ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full">
+            <img src={noData} alt="No Data" className="w-1/2 md:w-1/4" />
+            <p className="text-black mt-4">No tasks found</p>
           </div>
         )}
       </div>

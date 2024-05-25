@@ -2,7 +2,7 @@ import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { doc, serverTimestamp, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { UserAuth } from "../context/AuthContext";
 import { useList } from "../context/ListContext";
@@ -31,24 +31,30 @@ const TODOList = ({ docID, title, desc, status }) => {
     setAnchorEl(null);
   };
 
+  const deleteTodo = async () => {
+    await deleteDoc(doc(db, `user/${user.uid}/todos/${docID}`));
+    getTodos();
+    setAnchorEl(null);
+  };
+
   return (
-    <div className="border-b-2 py-3 px-2 w-full flex flex-row justify-between items-center">
-      <div className="flex-grow">
-        <div className="flex items-center">
-          {" "}
-          {/* Use flex to align title and icon horizontally */}
-          <p className="text-2xl text-black">{title}</p> {/* Title */}
-          {status === "Completed" && ( // Render tick mark for Completed status
-            <FaCheck className="ml-2" style={{ color: "green" }} /> // Adjust margin as needed
-          )}
-          {status === "Favorite" && ( // Render star for Favorite status
-            <FaStar className="ml-2" style={{ color: "gold" }} /> // Adjust margin as needed
-          )}
+    <div className="border-b-2 py-3 px-2 flex flex-row justify-between items-center md:items-center">
+      <div className="w-full md:w-5/6 md:mr-4 text-wrap">
+        <div className="flex items-center text-wrap">
+          <p className="text-2xl text-black overflow-wrap break-all font-bold">{title}</p>
         </div>
-        <p className="text-black">{desc}</p>
+        <p className="text-black overflow-wrap break-all">{desc}</p>
       </div>
 
-      <div>
+      <div className="">
+        {status === "Completed" && (
+          <FaCheck className="ml-2 text-inherit" color="green" size={26}/>
+        )}
+        {status === "Favorite" && (
+          <FaStar className="ml-2 text-inherit" color="gold" size={26}/>
+        )}  
+      </div>
+      <div className="">
         <BsThreeDotsVertical onClick={handleClick} />
       </div>
 
@@ -71,7 +77,7 @@ const TODOList = ({ docID, title, desc, status }) => {
       >
         <MenuItem onClick={() => updateStatus("Completed")}>Completed</MenuItem>
         <MenuItem onClick={() => updateStatus("Favorite")}>Favorite</MenuItem>
-        <MenuItem onClick={() => updateStatus("Deleted")}>Delete</MenuItem>
+        <MenuItem onClick={deleteTodo}>Delete</MenuItem>
       </Menu>
     </div>
   );
